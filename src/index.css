@@ -1,0 +1,269 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Rubik", ui-sans-serif, sans-serif;
+  --font-body: "Rubik", ui-sans-serif, sans-serif;
+  --font-paper: "Amiri", "Rubik", serif;
+
+  --color-ink: #1b2b32;
+  --color-sub: #55646d;
+  --color-faint: #8b98a0;
+  --color-paper: #f2f6f7;
+  --color-card: #ffffff;
+  --color-line: #dfe6ea;
+  --color-line-dark: #c2cdd5;
+
+  /* aquamarine — اللون الأساسي */
+  --color-pine: #5ef2d5;
+  --color-pine-dark: #0f9c84;
+  --color-pine-deep: #0a7f6d;
+  --color-pine-soft: #dcfbf4;
+
+  /* strawberry-red — تونسي / طباعة */
+  --color-tun: #f35252;
+  --color-tun-dark: #d63a3a;
+  --color-tun-soft: #ffe3e3;
+
+  /* tangerine — تنبيه وربط التمارين */
+  --color-saffron: #f79d65;
+  --color-saffron-dark: #d96f32;
+  --color-saffron-soft: #ffe8d6;
+
+  /* cool-sky — معلوماتي */
+  --color-blue: #60b5ff;
+  --color-blue-dark: #2f8fe0;
+  --color-blue-soft: #e3f1ff;
+
+  /* jasmine — حالات الاكتمال */
+  --color-jasmine: #ffe588;
+  --color-jasmine-dark: #d9b23e;
+  --color-jasmine-soft: #fff4cd;
+}
+
+html {
+  direction: rtl;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--color-ink);
+  background-color: var(--color-paper);
+  background-image:
+    radial-gradient(1000px 460px at 88% -120px, rgba(94, 242, 213, 0.2), transparent 70%),
+    radial-gradient(820px 420px at 6% 108%, rgba(243, 82, 82, 0.07), transparent 70%),
+    radial-gradient(700px 380px at -8% 18%, rgba(96, 181, 255, 0.11), transparent 70%),
+    radial-gradient(640px 340px at 104% 62%, rgba(255, 229, 136, 0.15), transparent 70%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%231b2b32' stroke-opacity='0.04'%3E%3Crect x='17' y='17' width='22' height='22'/%3E%3Crect x='17' y='17' width='22' height='22' transform='rotate(45 28 28)'/%3E%3C/g%3E%3C/svg%3E");
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+}
+
+input,
+select,
+textarea,
+button {
+  font-family: inherit;
+}
+
+::selection {
+  background: var(--color-pine-soft);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line-dark) transparent;
+}
+
+.card {
+  background: var(--color-card);
+  border: 2px solid var(--color-line);
+  border-radius: 14px;
+  box-shadow: 0 4px 0 var(--color-line);
+}
+
+/* ================= animated highlight (marker sweep) ================= */
+.hl {
+  position: relative;
+  display: inline-block;
+  color: var(--color-ink);
+  z-index: 0;
+  padding-inline: 0.1em;
+}
+.hl::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0.02em;
+  bottom: 0.08em;
+  z-index: -1;
+  border-radius: 0.28em;
+  background: linear-gradient(var(--hl, var(--color-jasmine)), var(--hl, var(--color-jasmine)));
+  /* يشبب للخلف حتى يظهر كمؤشّر كامل عند الأوّل */
+  transform-origin: 100% 50%;
+  transform: scaleX(0);
+  animation: hl-sweep 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
+}
+.hl.is-soft::before {
+  opacity: 0.55;
+}
+@keyframes hl-sweep {
+  to { transform: scaleX(1); }
+}
+
+/* ================= keyframes ================= */
+@keyframes pop-in {
+  0% { transform: scale(0.55); opacity: 0; }
+  70% { transform: scale(1.07); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes fade-up {
+  from { transform: translateY(14px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes step-fwd {
+  from { transform: translateX(-34px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes step-back {
+  from { transform: translateX(34px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes in-start {
+  from { transform: translateX(26px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes in-end {
+  from { transform: translateX(-26px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes sheet-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+@keyframes side-in {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes toast-in {
+  from { transform: translateY(18px) scale(0.96); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+@keyframes spin-seal {
+  to { transform: rotate(360deg); }
+}
+@keyframes drift {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(3deg); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+@keyframes pulse-soft {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(14, 114, 100, 0.35); }
+  60% { box-shadow: 0 0 0 9px rgba(14, 114, 100, 0); }
+}
+
+.anim-pop { animation: pop-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.anim-fade-up { animation: fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-step-fwd { animation: step-fwd 0.42s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-step-back { animation: step-back 0.42s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-in-start { animation: in-start 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-in-end { animation: in-end 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-sheet { animation: sheet-up 0.32s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-side-in { animation: side-in 0.3s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-fade-in { animation: fade-in 0.25s ease both; }
+.anim-toast { animation: toast-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.anim-seal { animation: spin-seal 26s linear infinite; }
+.anim-drift { animation: drift 5.5s ease-in-out infinite; }
+.anim-float { animation: float 6s ease-in-out infinite; }
+.anim-pulse-soft { animation: pulse-soft 2.2s ease-out infinite; }
+
+/* animated progress line */
+@keyframes flow-shimmer {
+  to { background-position: -200% center; }
+}
+.flow-line {
+  background-image: linear-gradient(90deg, var(--color-tun), var(--color-saffron), var(--color-blue), var(--color-pine), var(--color-tun));
+  background-size: 200% auto;
+  animation: flow-shimmer 3s linear infinite;
+}
+
+/* alternating-direction stagger */
+.stagger-alt > * { opacity: 0; animation: fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.stagger-alt > *:nth-child(odd) { animation-name: in-start; }
+.stagger-alt > *:nth-child(even) { animation-name: in-end; }
+.stagger-alt > *:nth-child(1) { animation-delay: 0.03s; }
+.stagger-alt > *:nth-child(2) { animation-delay: 0.08s; }
+.stagger-alt > *:nth-child(3) { animation-delay: 0.13s; }
+.stagger-alt > *:nth-child(4) { animation-delay: 0.18s; }
+.stagger-alt > *:nth-child(5) { animation-delay: 0.23s; }
+.stagger-alt > *:nth-child(6) { animation-delay: 0.28s; }
+.stagger-alt > *:nth-child(7) { animation-delay: 0.33s; }
+.stagger-alt > *:nth-child(8) { animation-delay: 0.38s; }
+
+.stagger-up > * { animation: fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.stagger-up > *:nth-child(1) { animation-delay: 0.02s; }
+.stagger-up > *:nth-child(2) { animation-delay: 0.06s; }
+.stagger-up > *:nth-child(3) { animation-delay: 0.1s; }
+.stagger-up > *:nth-child(4) { animation-delay: 0.14s; }
+.stagger-up > *:nth-child(5) { animation-delay: 0.18s; }
+.stagger-up > *:nth-child(6) { animation-delay: 0.22s; }
+
+/* scroll reveal */
+.rv {
+  opacity: 0;
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.rv-up { transform: translateY(26px); }
+.rv-start { transform: translateX(30px); }
+.rv-end { transform: translateX(-30px); }
+.rv-in { opacity: 1; transform: translate(0, 0); }
+
+.shimmer {
+  background-image: linear-gradient(100deg, rgba(255, 255, 255, 0) 35%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 65%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+/* ================= print ================= */
+@media print {
+  body {
+    background: #fff !important;
+    background-image: none !important;
+  }
+  .no-print { display: none !important; }
+  .print-root { position: absolute; inset: 0; overflow: visible !important; padding: 0 !important; }
+  .exam-sheet {
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+
+/* Phase 3: print only the exam document from the review step.
+   The visible artifact is the server PDF (iframe); a body-level portal copy
+   is the actual print source so Arabic RTL renders identically. */
+html, body { overflow-x: hidden; overflow-x: clip; }
+
+.print-portal { position: absolute; left: -99999px; top: 0; width: 190mm; }
+
+@media print {
+  /* hide everything at body level except the print portal */
+  body > *:not(.print-portal) { display: none !important; }
+  .print-portal { display: block !important; position: static !important; left: auto !important; width: auto !important; }
+}
